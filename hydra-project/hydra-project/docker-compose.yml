@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./backend
+    container_name: hydra-backend
+    ports:
+      - "4000:4000"
+    networks:
+      - hydra-net
+    environment:
+      - DB_HOST=mysqlmaster
+      - DB_PORT=3306
+      - DB_USER=remote_user
+      - DB_PASSWORD=root
+      - DB_NAME=productdb
+
+  frontend:
+    build: ./frontend
+    container_name: hydra-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - hydra-net
+
+networks:
+  hydra-net:
+    driver: bridge
