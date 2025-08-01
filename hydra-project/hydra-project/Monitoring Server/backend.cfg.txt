@@ -1,6 +1,6 @@
 define host {
     use                     linux-server
-    host_name               client2
+    host_name               backend
     alias                   Client 2 Machine
     address                 192.168.80.140
     max_check_attempts      5
@@ -11,7 +11,7 @@ define host {
 
 define service {
     use                     generic-service
-    host_name               client2
+    host_name               backend
     service_description     Ping
     check_command           check_ping!100.0,20%!500.0,60%
 }
