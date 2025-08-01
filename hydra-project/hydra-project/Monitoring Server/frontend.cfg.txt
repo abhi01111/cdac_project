@@ -1,0 +1,87 @@
+define host {
+    use                     linux-server
+    host_name               client1
+    alias                   Client 1 Machine
+    address                 192.168.80.138
+    max_check_attempts      5
+    check_period            24x7
+    notification_interval   30
+    notification_period     24x7
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Zombie_Processes
+    check_command           check_ncpa_zombie_processes
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Top_Memory_Process
+    check_command           check_ncpa_top_mem
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Network_Bytes_Received_ens37
+    check_command           check_ncpa_net_recv_ens37
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Process_SSHD_Status
+    check_command           check_ncpa_process_sshd
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     CPU_Usage
+    check_command           check_ncpa_cpu
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     SSH_Port_Check
+    check_command           check_ncpa_plugin!plugins/check_port.sh!-a "-p 22"
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     System Uptime
+    check_command           check_ncpa!Password1234!system/uptime!300!120
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     CPU Load
+    check_command           check_ncpa!Password1234!cpu/percent!80!90
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Memory Usage
+    check_command           check_ncpa!Password1234!memory/virtual!80!90
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Swap Usage
+    check_command           check_ncpa!Password1234!memory/swap!80!90
+}
+
+define service {
+    use                     generic-service
+    host_name               client1
+    service_description     Ping
+    check_command           check_ping!100.0,20%!500.0,60%
+}
