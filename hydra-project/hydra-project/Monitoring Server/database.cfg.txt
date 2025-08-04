@@ -2,11 +2,25 @@ define host {
     use             linux-server
     host_name       database
     alias           Client 3
-    address         15.207.16.250
+    address         13.200.242.246
     max_check_attempts      5
     check_period            24x7
     notification_interval   30
     notification_period     24x7
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     CPU_Temperature
+    check_command           check_ncpa_cpu_temp
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     Ping
+    check_command           check_ping!100.0,20%!500.0,60%
 }
 
 define service {
@@ -22,3 +36,46 @@ define service {
     service_description     Memory Usage
     check_command           check_ncpa!Password1234!memory/virtual!80!90
 }
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     SSH_Port_Check
+    check_command           check_ncpa_plugin!plugins/check_port.sh!-a "-p 22"
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     Top_Memory_Process
+    check_command           check_ncpa_top_mem!Password1234
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     System_Uptime
+    check_command           check_ncpa_uptime!Password1234
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     Zombie_Processes
+    check_command           check_ncpa_zombie_processes
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     Process_SSHD_Status
+    check_command           check_ncpa_sshd_status
+}
+
+define service {
+    use                     generic-service
+    host_name               database
+    service_description     Swap_Usage
+    check_command           check_ncpa_swap_usage
+}
+
